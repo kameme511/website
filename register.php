@@ -1,74 +1,31 @@
-<?php
-/* ------------------------------
- * 必要なファイルを読み込む
- * ------------------------------ */
-require_once 'private/bootstrap.php';
-require_once 'private/database.php';
-
-/** @var PDO $dbh データベースハンドラ */
-
-/* --------------------
- * セッション開始
- * -------------------- */
-session_start();
-/* ------------------------------
- * 送られてきた値を取得する
- * ------------------------------ */
-$token = $_POST['token'];
-
-/* --------------------------------------------------
- * 送られてきたトークンのバリデーション
- *
- * セッションに保存されているトークンと比較し、
- * 一致していなかった場合はトップ画面にリダイレクトする
- * -------------------------------------------------- */
-if($token != $_SESSION['token']) {
-    unset($_SESSION['token']);
-    redirect('/index.php');
-}
-
-/* ----------------------------------------
- * セッション内に保存した投稿内容を取得する
- * ---------------------------------------- */
-$name = $_SESSION['name'];
-$content = $_SESSION['content'];
-
-/* --------------------
- * データのインサート処理
- * -------------------- */
-$statement = $dbh->prepare('INSERT INTO `articles`(name, content) VALUE(:name, :content)');
-$statement->execute([
-    'name' => $name,
-    'content' => $content,
-    ]);
-/* ----------------------------------------
- * セッション内のデータを削除する
- * ---------------------------------------- */
-unset($_SESSION['name']);
-unset($_SESSION['content']);
-unset($_SESSION['token']);
-
-setcookie('userName',$name, time()+60*60*24*14);
-?>
-
-<!-- 描画するHTML -->
-<!doctype html>
 <html lang="ja">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>登録成功</title>
-</head>
-<body>
-    <header>
-        <h1>登録成功</h1>
-    </header>
-    <main>
-        <a href="index.php">戻る</a>
-    </main>
-    <footer>
-        <hr>
-    </footer>
-</body>
+    <title>会員登録</title>
+    <div>
+        <form action="confirm.php" method="post">
+            <table>
+                <thead>
+                <tr>
+                    <th colspan="2">新規会員登録</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th><label for="name">ユーザー名</label></th>
+                    <td><input type="text" name="name" id="name" required></td>
+                </tr>
+                <tr>
+                    <th><label for="content">パスワード</label></th>
+                    <td><input name="content" id="content"  required></td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-success">登録</button>
+        </form>
+    </div>
+  </body>
 </html>
