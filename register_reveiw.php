@@ -19,7 +19,7 @@ $_SESSION['content'] = $content;
  * 今回は値が入力されているかのみを確認する
  * -------------------------------------------------- */
 if(empty($name) == true || empty($content) == true) {
-    redirect('/index.php');
+    redirect('/top.html');
 }
 
 /* ----------------------------------------
@@ -38,14 +38,14 @@ $_SESSION['token'] = $token;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>投稿確認</title>
+    <title>登録確認</title>
 </head>
 <body>
     <header>
         <h1>確認</h1>
     </header>
     <main>
-        <div>下記の内容で投稿しますがよろしいですか?</div>
+        <div>下記の内容で登録しますがよろしいですか?</div>
         <table>
             <tbody>
             <tr><th>ユーザー名</th><td><?= htmlspecialchars($name); ?></td></tr>
@@ -54,7 +54,7 @@ $_SESSION['token'] = $token;
         </table>
         <form action="register_complete.php" method="post">
             <input type="hidden" name="token" value="<?= $token ?>">
-            <button type="submit">投稿</button>
+            <button type="submit">登録</button>
         </form>
     </main>
     <footer>
