@@ -28,9 +28,7 @@ if(empty($name) == true || empty($content) == true) {
  * ---------------------------------------- */
 $token = strval(time());
 $_SESSION['token'] = $token;
-
 ?>
-
 <!-- 描画するHTML -->
 <!doctype html>
 <html lang="ja">
