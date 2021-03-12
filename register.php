@@ -20,10 +20,11 @@
                 </tr>
                 <tr>
                     <th><label for="content">パスワード</label></th>
-                    <td><input name="content" id="content"  required></td>
+                    <td><input name="content" id="content" pattern="^[0-9A-Za-z]+$" required></td>
                 </tr>
                 </tbody>
             </table>
+            <a>パスワードは、半角英数字で入力する必要があります。</a></br>
             <button type="submit" class="btn btn-success">登録</button>
         </form>
     </div>
