@@ -1,4 +1,6 @@
 <?php
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 require_once 'private/database.php';
 session_start();
 $name = $_SESSION['name'];
@@ -21,8 +23,8 @@ $articles = $statement->fetchAll();
     <nav role="navigation">
       <div class="center-block">
         <a href="logout.php" class="btn btn-danger">ログアウト</a>
-    	</div>
-		</nav>
+        </div>
+                </nav>
 </head>
   <body>
     <header>
@@ -34,37 +36,37 @@ $articles = $statement->fetchAll();
                 <thead>
                 <tr>
                     <th colspan="2">新規投稿</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th><label for="name">名前</label></th>
-                    <td><name="name" id="name"><?= $name ?></td>
-                </tr>
-                <tr>
-                    <th><label for="content">投稿内容</label></th>
-                    <td><textarea name="content" id="content" rows="2" required></textarea></td>
-                    <td><button type="submit" class="btn btn-outline-success">投稿</button></td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
-    </div>
-    <?php foreach ($articles as $article) { ?>
-        <li>
-            <div>
-                <?= $article['id'] ?>:&nbsp;<?=htmlspecialchars($article['name']); ?>:&nbsp;<?= $article['created_at'] ?>
-            </div>
-            <div><?= nl2br(htmlspecialchars($article['content'])); ?></div>
-            <div style="display: inline-flex;">
-                &nbsp;
-                <form action="confirm_delete.php" method="post">
-                    <input type="hidden" name="id" value="<?= $article['id'] ?>">
-                    <button type="submit" class="btn btn-outline-warning" style="width:90px;height:40px">削除依頼</button>
-                </form>
-            </div>
-        </li>
-        <br/>
-    <?php } ?>
-  </body>
+                  </tr>
+              </thead>
+              <tbody>
+              <tr>
+                  <th><label for="name">名前</label></th>
+                  <td><name="name" id="name"><?= $name ?></td>
+              </tr>
+              <tr>
+                  <th><label for="content">投稿内容</label></th>
+                  <td><textarea name="content" id="content" rows="2" required></textarea></td>
+                  <td><button type="submit" class="btn btn-outline-success">投稿</button></td>
+              </tr>
+              </tbody>
+          </table>
+      </form>
+  </div>
+  <?php foreach ($articles as $article) { ?>
+      <li>
+          <div>
+              <?= $article['id'] ?>:&nbsp;<?=htmlspecialchars($article['name']); ?>:&nbsp;<?= $article['created_at'] ?>
+          </div>
+          <div><?= nl2br(htmlspecialchars($article['content'])); ?></div>
+          <div style="display: inline-flex;">
+              &nbsp;
+              <form action="confirm_delete.php" method="post">
+                  <input type="hidden" name="id" value="<?= $article['id'] ?>">
+                  <button type="submit" class="btn btn-outline-warning" style="width:90px;height:40px">削除依頼</button>
+              </form>
+          </div>
+      </li>
+      <br/>
+  <?php } ?>
+</body>
 </html>
