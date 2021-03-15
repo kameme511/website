@@ -1,4 +1,6 @@
 <?php
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 require 'vendor/autoload.php';
 
 use Aws\S3\S3Client;
@@ -25,4 +27,4 @@ try {
    echo $result['ObjectURL'] . PHP_EOL;
 } catch (S3Exception $e) {
    echo $e->getMessage() . PHP_EOL;
-} 
+}
