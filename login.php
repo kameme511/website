@@ -1,6 +1,6 @@
 <?php
 session_start();
-$token = strval(time());
+$token = uniqid(dechex(random_int(0, 255)));
 $_SESSION['token'] = $token;
 
 ?>
@@ -30,7 +30,7 @@ $_SESSION['token'] = $token;
                 </tr>
                 </tbody>
             </table>
-            <input type="hidden" name="token" value="<?= $token ?>">
+            <input type="hidden" name="token" value="<?=$token?>">
             <button type="submit" class="btn btn-success">ログイン</button>
         </form>
     </div>

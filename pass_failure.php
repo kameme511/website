@@ -7,21 +7,16 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>onegai</title>
-    <nav role="navigation">
-    	<ul>
-  　　  <li><a href="register.php">会員登録</a></li>
-  　　  <li><a href="login.php">ログイン</a></li>
-    	</ul>
-		</nav>
-</head>
+  </head>
   <body>
     <header>
       <h1>ユーザー名、またはパスワードに誤りがあります。<br>再度お願いします。</h1>
     </header>
 
     <div class="center-block">
-      <a href="#" class="btn btn-success">ボタン</a>
-      <a href="#" class="btn btn-warning">ボタン</a>
-      </div>
+      <a href="register.php" class="btn btn-success">会員登録</a>
+      <a href="login.php" class="btn btn-warning">ログイン</a>
+    </div>
+  <a href="/">トップページへ戻る</a>
   </body>
 </html>

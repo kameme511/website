@@ -1,4 +1,6 @@
 <?php
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 /* ------------------------------
  * 必要なファイルを読み込む
  * ------------------------------ */
@@ -64,7 +66,7 @@ setcookie('userName',$name, time()+60*60*24*14);
         <h1>登録成功</h1>
     </header>
     <main>
-        <a href="index.html">戻る</a>
+        <a href="/">戻る</a>
     </main>
     <footer>
         <hr>
