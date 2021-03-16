@@ -46,6 +46,7 @@ $articles = $statement->fetchAll();
               <tr>
                   <th><label for="content">投稿内容</label></th>
                   <td><textarea name="content" id="content" rows="2" required></textarea></td>
+                  <td><input type="file" name="picture" accept="image/*"></td>
                   <td><button type="submit" class="btn btn-outline-success">投稿</button></td>
               </tr>
               </tbody>
