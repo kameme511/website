@@ -29,9 +29,10 @@ $articles = $statement->fetchAll();
   <body>
     <header>
       <h1>SNS</h1>
+      <img src="https://1.bp.blogspot.com/-H61djj8LaRk/X68akpuOknI/AAAAAAABcSA/6h-CmsvWsw0eum4hgZ6jje0f4ctNxZG9wCNcBGAsYHQ/s675/cthulhu_deep_ones.png" alt="test" title="test" />
     </header>
     <div>
-        <form action="confirm.php" method="post">
+        <form action="confirm.php" method="post" enctype="multipart/form-data">
             <table>
                 <thead>
                 <tr>
@@ -48,8 +49,8 @@ $articles = $statement->fetchAll();
                   <td><textarea name="content" id="content" rows="2" required></textarea></td>
               </tr>
               <tr>
-                  <th><label for="picture">画像</th>
-                  <td><input type="file" name="picture" accept="image/*"></td>
+                  <th><label for="image">画像</th>
+                  <td><input type="file" name="upimg" accept="image/*"></td>
               </tr>
               <tr>
                   <td><button type="submit" class="btn btn-outline-success">投稿</button></td>
@@ -65,14 +66,23 @@ $articles = $statement->fetchAll();
           </div>
           <div><?= nl2br(htmlspecialchars($article['content'])); ?></div>
           <div style="display: inline-flex;">
+          <?php
+          if(isset($article['picture'])){
+          echo "<div>";
+          echo '<img src ='.$article['picture'].' alt ="画像'.$article['id'].'">';
+          echo "</div>";
+          }
+          ?>
               &nbsp;
               <form action="confirm_delete.php" method="post">
                   <input type="hidden" name="id" value="<?= $article['id'] ?>">
-                  <button type="submit" class="btn btn-outline-warning" style="width:90px;height:40px">削除依頼</button>
               </form>
           </div>
       </li>
       <br/>
   <?php } ?>
 </body>
+<footer>
+<a href="">削除依頼・ご意見ご要望</a>
+</footer>
 </html>
