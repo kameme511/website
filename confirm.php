@@ -11,6 +11,12 @@ $name = $_SESSION['name'];
 $content =  $_POST['content'];
 $_SESSION['content'] = $content;
 if($_FILES['upimg']['name']){
+    $ext = substr($_FILES['upimg']['name'], strrpos($_FILES['upimg']['name'], '.') + 1);
+    if(strtolower($ext) !== 'png' && strtolower($ext) !== 'jpg' && strtolower($ext) !== 'gif'){
+    $_SESSION['img_failure'] = $ext;
+    header('location:/top.php');
+    exit;
+    }
     $tmpname = str_replace('/tmp/','',$_FILES['upimg']['tmp_name']);
     $new_filename = 'files/'.$tmpname.'-'.time().'.'.'png';
     $upimg = fopen($_FILES['upimg']['tmp_name'],'rb');
@@ -34,8 +40,6 @@ if(empty($content) == true) {
  * ---------------------------------------- */
 $token = strval(time());
 $_SESSION['token'] = $token;
-echo "$new_filename";
-echo "$path";
 ?>
 
 <!-- 描画するHTML -->
@@ -58,7 +62,7 @@ echo "$path";
             <tr><th>名前</th><td><?= htmlspecialchars($name); ?></td></tr>
             <tr><th>投稿内容</th><td><?= htmlspecialchars($content); ?></td></tr>
             <?php
-            if(isset($_FILES['upimg']['name'])){
+            if(isset($img)){
             echo "<tr><th>画像</th><td>".htmlspecialchars($_FILES['upimg']['name'])."</td></tr>";  
         }
         ?>
