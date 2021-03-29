@@ -1,4 +1,5 @@
 <?php
+require_once 'private/database.php';
 /* --------------------
  * セッション開始
  * -------------------- */
@@ -20,6 +21,17 @@ $_SESSION['content'] = $content;
  * -------------------------------------------------- */
 if(empty($name) == true || empty($content) == true) {
   require_once 'private/failure_post.php';
+}
+
+$statement = $dbh->prepare('SELECT name FROM user_articles WHERE name = :name');
+$statement->execute([
+    'name' => $name,
+    ]);
+if($statement->rowCount() != 0){
+    unset($_SESSION['name']);
+    unset($_SESSION['content']);
+    header('location:/register.php', true, 307);
+    exit;
 }
 
 /* ----------------------------------------
