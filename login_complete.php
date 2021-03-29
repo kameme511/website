@@ -5,7 +5,7 @@ error_reporting(E_ALL);
  * 必要なファイルを読み込む
  * ------------------------------ */
 require_once 'private/database.php';
-
+require_once 'private/bootstrap.php';
 /** @var PDO $dbh データベースハンドラ */
 
 /* --------------------
@@ -62,7 +62,7 @@ $_SESSION['name'] = $name;
         <h1>おかえりなさい、<?= $name ?>さん</h1>
     </header>
     <main>
-        <a href="top.php">トップページへ</a>
+        <a href="top.php" class="btn btn-primary">トップページへ</a>
     </main>
     <footer>
         <hr>
