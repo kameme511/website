@@ -12,9 +12,11 @@ $statement->execute();
 $articles = $statement->fetchAll();
 ?>
 <!doctype html>
-<?php require_once 'private/database.php'; ?>
+<?php
+  require_once 'private/database.php';
+  require_once 'private/bootstrap.php';
+?>
 <html lang="ja">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -23,16 +25,23 @@ $articles = $statement->fetchAll();
     <nav role="navigation">
       <div class="center-block">
         <a href="logout.php" class="btn btn-danger">ログアウト</a>
-        </div>
-                </nav>
+        <?php
+        if($_SESSION['name'] == "developer"){
+          echo '<a href="delete.php" class="btn btn-outline-danger">投稿削除</a>';
+        }
+        ?>
+      </div>
+    </nav>
 </head>
   <body>
     <header>
       <h1>SNS</h1>
-      <img src="https://1.bp.blogspot.com/-H61djj8LaRk/X68akpuOknI/AAAAAAABcSA/6h-CmsvWsw0eum4hgZ6jje0f4ctNxZG9wCNcBGAsYHQ/s675/cthulhu_deep_ones.png" alt="test" title="test" />
+      <img src="https://1.bp.blogspot.com/-H61djj8LaRk/X68akpuOknI/AAAAAAABcSA/6h-CmsvWsw0eum4hgZ6jje0f4ctNxZG9wCNcBGAsYHQ/s675/cthulhu_deep_ones.png" class="img-fluid" title="kawaii" />
     </header>
-    <div>
-        <form action="confirm.php" method="post" enctype="multipart/form-data">
+    <div class="container">
+       <div class="row">
+          <div class="col">
+            <form action="confirm.php" method="post" enctype="multipart/form-data">
             <table>
                 <thead>
                 <tr>
@@ -52,37 +61,39 @@ $articles = $statement->fetchAll();
                   <th><label for="image">画像</th>
                   <td><input type="file" name="upimg" accept="image/*"></td>
               </tr>
-              <tr>
-                  <td><button type="submit" class="btn btn-outline-success">投稿</button></td>
-              </tr>
               </tbody>
           </table>
+          <button type="submit" class="btn btn-outline-success">投稿</button>
       </form>
-  </div>
-  <?php foreach ($articles as $article) { ?>
-      <li>
+<?php
+  if(isset($_SESSION['img_failure'])){
+  echo "<tr><td><p class='text-warning'>画像ファイルを選択してください！！</p></td></tr>";
+  unset($_SESSION['img_failure']);
+  }
+?>
+      </div>
+<?php  foreach ($articles as $article) { ?>
+      <hr>
           <div>
-              <?= $article['id'] ?>:&nbsp;<?=htmlspecialchars($article['name']); ?>:&nbsp;<?= $article['created_at'] ?>
+              <?=htmlspecialchars($article['name']); ?>:&nbsp;<?= $article['created_at'] ?>
           </div>
-          <div><?= nl2br(htmlspecialchars($article['content'])); ?></div>
           <div style="display: inline-flex;">
           <?php
           if(isset($article['picture'])){
           echo "<div>";
-          echo '<img src ='.$article['picture'].' alt ="画像'.$article['id'].'">';
+          echo '<img src ='.$article['picture'].' class="img-fluid">';
           echo "</div>";
           }
           ?>
-              &nbsp;
-              <form action="confirm_delete.php" method="post">
-                  <input type="hidden" name="id" value="<?= $article['id'] ?>">
-              </form>
           </div>
-      </li>
+          <div><?= nl2br(htmlspecialchars($article['content'])); ?></div>
+      <br/>
+      <br/>
       <br/>
   <?php } ?>
+   </div>
 </body>
 <footer>
-<a href="">削除依頼・ご意見ご要望</a>
+<a href="">削除依頼ご意見ご要望</a>
 </footer>
 </html>
