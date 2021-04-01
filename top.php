@@ -27,7 +27,7 @@ $articles = $statement->fetchAll();
         <a href="logout.php" class="btn btn-danger">ログアウト</a>
         <?php
         if($_SESSION['name'] == "developer"){
-          echo '<a href="delete.php" class="btn btn-outline-danger">投稿削除</a>';
+          echo '<a href="del.php" class="btn btn-outline-danger">投稿削除</a>';
         }
         ?>
       </div>

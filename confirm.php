@@ -60,7 +60,7 @@ $_SESSION['token'] = $token;
         <table>
             <tbody>
             <tr><th>名前</th><td><?= htmlspecialchars($name); ?></td></tr>
-            <tr><th>投稿内容</th><td><?= htmlspecialchars($content); ?></td></tr>
+            <tr><th>投稿内容</th><td><?= nl2br(htmlspecialchars($content)); ?></td></tr>
             <?php
             if(isset($img)){
             echo "<tr><th>画像</th><td>".htmlspecialchars($_FILES['upimg']['name'])."</td></tr>";  
