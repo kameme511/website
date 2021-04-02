@@ -29,7 +29,7 @@ if(empty($value) == true) {
  * データのデリート処理
  * -------------------- */
 foreach($value as $id){
-  $statement = $dbh->prepare('DELETE FROM `bbs` WHERE id = :id');
+  $statement = $dbh->prepare('UPDATE `bbs` SET name = "あぼん", content = "削除されました", WHERE id = :id');
   $statement->execute([
   'id' => $id,
 ]);

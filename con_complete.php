@@ -24,7 +24,7 @@ $content = $_SESSION['content'];
  * セッションに保存されているトークンと比較し、
  * 一致していなかった場合はトップ画面にリダイレクトする
  * -------------------------------------------------- */
-if($token != $_SESSION['token']) {
+if($token != $_SESSION['token'] || empty($token) == true) {
     unset($_SESSION['token']);
     redirect('/top.php');
 }

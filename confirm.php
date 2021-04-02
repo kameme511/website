@@ -1,4 +1,5 @@
 <?php
+require_once 'private/bootstrap.php';
 /* --------------------
  * セッション開始
  * -------------------- */
@@ -75,7 +76,7 @@ $_SESSION['token'] = $token;
             }
             ?>
             <input type="hidden" name="token" value="<?= $token ?>">
-            <button type="submit">投稿</button>
+            <button type="submit" class="btn btn-outline-success">投稿</button>
         </form>
     </main>
     <footer>

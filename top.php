@@ -7,9 +7,12 @@ $name = $_SESSION['name'];
 if(empty($_SESSION['name']) == true){
    require_once'private/failure_post.php';
 }
-$statement = $dbh->prepare('SELECT * FROM  `bbs` ORDER BY `id` DESC');
-$statement->execute();
-$articles = $statement->fetchAll();
+$statement1 = $dbh->prepare('SELECT * FROM  `bbs` ORDER BY `id` DESC');
+$statement1->execute();
+$articles1 = $statement1->fetchAll();
+$statement2 = $dbh->prepare('SELECT * FROM  `comments` ORDER BY `id` DESC');
+$statement2->execute();
+$articles2 = $statement2->fetchAll();
 ?>
 <!doctype html>
 <?php
@@ -72,25 +75,57 @@ $articles = $statement->fetchAll();
   }
 ?>
       </div>
-<?php  foreach ($articles as $article) { ?>
+<?php  foreach ($articles1 as $article1) { ?>
       <hr>
           <div>
-              <?=htmlspecialchars($article['name']); ?>:&nbsp;<?= $article['created_at'] ?>
+              <?=htmlspecialchars($article1['name']); ?>:&nbsp;<?= $article1['created_at'] ?>
           </div>
           <div style="display: inline-flex;">
           <?php
-          if(isset($article['picture'])){
+          if(isset($article1['picture'])){
           echo "<div>";
-          echo '<img src ='.$article['picture'].' class="img-fluid">';
+          echo '<img src ='.$article1['picture'].' class="img-fluid">';
           echo "</div>";
           }
           ?>
           </div>
-          <div><?= nl2br(htmlspecialchars($article['content'])); ?></div>
+          <div><?= nl2br(htmlspecialchars($article1['content'])); ?></div>
       <br/>
       <br/>
       <br/>
-  <?php } ?>
+      <form method="post" name="comment" action="comment.php">
+        <input type="hidden" name="id" value="<?= $article1['id']; ?>">
+        <button>コメントする</button>
+      </form>
+<?php  foreach ($articles2 as $article2) {
+       if($article2['destination'] == $article1['id']){
+?> 
+     <hr>
+          <div>
+              <?=htmlspecialchars($article2['name']); ?>:&nbsp;<?= $article2['created_at'] ?>
+          </div>
+          <div style="display: inline-flex;">
+          <?php
+          if(isset($article2['picture'])){
+          echo "<div>";
+          echo '<img src ='.$article2['picture'].' class="img-fluid">';
+          echo "</div>";
+          }
+          ?>
+          </div>
+          <div><?= nl2br(htmlspecialchars($article2['content'])); ?></div>
+          <br/>
+          <br/>
+          <br/>
+          <form method="post" name="comment" action="comment.php">
+            <input type="hidden" name="id" value="<?= $article2['id']; ?>">
+            <button>コメントする</button>
+          </form>
+<?php
+      }
+    }
+  }
+?>
    </div>
 </body>
 <footer>
