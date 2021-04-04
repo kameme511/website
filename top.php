@@ -10,7 +10,7 @@ if(empty($_SESSION['name']) == true){
 $statement1 = $dbh->prepare('SELECT * FROM  `bbs` ORDER BY `id` DESC');
 $statement1->execute();
 $articles1 = $statement1->fetchAll();
-$statement2 = $dbh->prepare('SELECT * FROM  `comments` ORDER BY `id` DESC');
+$statement2 = $dbh->prepare('SELECT * FROM  `comments` ORDER BY `id`');
 $statement2->execute();
 $articles2 = $statement2->fetchAll();
 ?>
@@ -26,7 +26,7 @@ $articles2 = $statement2->fetchAll();
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>onegai</title>
     <nav role="navigation">
-      <div class="center-block">
+      <div>
         <a href="logout.php" class="btn btn-danger">ログアウト</a>
         <?php
         if($_SESSION['name'] == "developer"){
@@ -95,12 +95,13 @@ $articles2 = $statement2->fetchAll();
       <br/>
       <form method="post" name="comment" action="comment.php">
         <input type="hidden" name="id" value="<?= $article1['id']; ?>">
-        <button>コメントする</button>
+        <button class="btn btn-outline-primary btn-sm">コメントする</button>
       </form>
 <?php  foreach ($articles2 as $article2) {
        if($article2['destination'] == $article1['id']){
 ?> 
      <hr>
+     <div class="col-md-9 offset-md-1">
           <div>
               <?=htmlspecialchars($article2['name']); ?>:&nbsp;<?= $article2['created_at'] ?>
           </div>
@@ -114,13 +115,10 @@ $articles2 = $statement2->fetchAll();
           ?>
           </div>
           <div><?= nl2br(htmlspecialchars($article2['content'])); ?></div>
+     </div>
           <br/>
           <br/>
           <br/>
-          <form method="post" name="comment" action="comment.php">
-            <input type="hidden" name="id" value="<?= $article2['id']; ?>">
-            <button>コメントする</button>
-          </form>
 <?php
       }
     }

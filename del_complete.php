@@ -13,6 +13,9 @@ session_start();
 if(isset($_POST['id']) && is_array($_POST['id'])) {
     $value = $_POST['id'];
 }
+if(isset($_POST['com_id']) && is_array($_POST['com_id'])){
+    $com_value = $_POST['com_id'];
+}
 /* --------------------------------------------------
  * 送られてきたトークンのバリデーション
  *
@@ -22,18 +25,29 @@ if(isset($_POST['id']) && is_array($_POST['id'])) {
 if($_SESSION['name'] != "developer"){
     redirect('/top.php');
 }
-if(empty($value) == true) {
+if(empty($value) == true && empty($com_value) == true) {
     header('location:/del.php');
 }
 /* --------------------
  * データのデリート処理
  * -------------------- */
+if(isset($value)){
 foreach($value as $id){
-  $statement = $dbh->prepare('UPDATE `bbs` SET name = "あぼん", content = "削除されました", WHERE id = :id');
+  $statement = $dbh->prepare('UPDATE `bbs` SET name = "あぼん", content = "削除されました" WHERE id = :id');
   $statement->execute([
   'id' => $id,
 ]);
+  }
 }
+if(isset($com_value)){
+foreach($com_value as $com_id){
+  $statement2 = $dbh->prepare('UPDATE `comments` SET name = "あぼん", content = "削除されました" WHERE id = :id');
+  $statement2->execute([
+  'id' => $com_id,
+]);
+  }
+}
+
 ?>
 
 <!-- 描画するHTML -->

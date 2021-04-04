@@ -10,9 +10,12 @@ if($_SESSION['name'] != "developer") {
 <?php
   require_once 'private/database.php';
   require_once 'private/bootstrap.php';
-  $statement = $dbh->prepare('SELECT * FROM  `bbs` ORDER BY `id` DESC');
-  $statement->execute();
-  $articles = $statement->fetchAll();
+  $statement1 = $dbh->prepare('SELECT * FROM  `bbs` ORDER BY `id` DESC');
+  $statement1->execute();
+  $articles1 = $statement1->fetchAll();
+  $statement2 = $dbh->prepare('SELECT * FROM `comments` ORDER BY `id`');
+  $statement2->execute();
+  $articles2 = $statement2->fetchAll();
 ?>
 <html lang="ja">
 <head>
@@ -32,28 +35,57 @@ if($_SESSION['name'] != "developer") {
     </header>
      <form action="del_complete.php" method="post">
      <input type="submit" value="削除" class="btn btn-outline-danger">
-<?php  foreach ($articles as $article) { ?>
+<?php  foreach ($articles1 as $article1) { ?>
       <hr>
           <div>
-          <input type="checkbox" name="id[]" value="<?= $article['id']; ?>"
+          <input type="checkbox" name="id[]" value="<?= $article1['id']; ?>"
           </div>
           <div>
-          <?= htmlspecialchars($article['name']); ?>:&nbsp;<?= $article['created_at'] ?>
+          <?= htmlspecialchars($article1['name']); ?>:&nbsp;<?= $article1['created_at'] ?>
           </div>
           <div style="display: inline-flex;">
           <?php
-          if(isset($article['picture'])){
+          if(isset($article1['picture'])){
           echo "<div>";
-          echo '<img src ='.$article['picture'].' class="img-fluid">';
+          echo '<img src ='.$article1['picture'].' class="img-fluid">';
           echo "</div>";
           }
           ?>
           </div>
-          <div><?= nl2br(htmlspecialchars($article['content'])); ?></div>
+          <div><?= nl2br(htmlspecialchars($article1['content'])); ?></div>
       <br/>
       <br/>
       <br/>
-  <?php } ?>
+ <?php  foreach ($articles2 as $article2) {
+       if($article2['destination'] == $article1['id']){
+?>
+     <hr>
+     <div class="col-md-9 offset-md-1">
+          <div>
+          <input type="checkbox" name="com_id[]" value="<?= $article2['id']; ?>"
+          </div>
+          <div>
+              <?=htmlspecialchars($article2['name']); ?>:&nbsp;<?= $article2['created_at'] ?>
+          </div>
+          <div style="display: inline-flex;">
+          <?php
+          if(isset($article2['picture'])){
+          echo "<div>";
+          echo '<img src ='.$article2['picture'].' class="img-fluid">';
+          echo "</div>";
+          }
+          ?>
+          </div>
+          <div><?= nl2br(htmlspecialchars($article2['content'])); ?></div>
+     </div>
+          <br/>
+          <br/>
+          <br/>
+<?php 
+      }
+    }
+  }
+?>
    </form>
    </div>
 </body>
